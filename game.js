@@ -3,6 +3,947 @@ const optionButtonsElement = document.getElementById(`option-buttons`);
 
 let inventory = {};
 
+const plotPoints = [
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        setInventory: {note: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag and walk towards door",
+        setInventory: {bag: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 2,
+    plotDescription: 'You read the note.  It says, "Stay clear of the door." You exit through the window.', 
+    options: [
+      {
+        text: 'Go west.', 
+        nextPlotPoint: -1
+      }, 
+      {
+        text: 'Go east.',
+        nextPlotPoint: 4
+      }
+    ]
+  },
+  {
+    id: 3, 
+    plotDescription: "As you open the door, a bomb explodes throwing you throw the window.", 
+    options: [
+      {
+        text: 'Read note before you die', 
+        required: (theInventory) => theInventory.note, 
+        nextPlotPoint: 5
+      },
+      {
+        text: 'Mumble something and die. Restart game.', 
+        nextPlotPoint: -1
+      }
+    ]
+  }, 
+  {
+    id: 4,
+    plotDescription: "You decide to go east.  As you walk east, you notice a hill with a cottage on it.",
+    options: [
+      {
+        text: "Explore cottage.",
+        nextPlotPoint: -1
+      }, 
+      {
+        text: "Continue walking east", 
+        nextPlotPoint: -1
+      }, 
+      {
+        text: "Sit down and explore contents of bag",
+        required: (theInventory) => theInventory.bag,
+        nextPlotPoint: -1
+      }, 
+      {
+        text: "Examine note closer", 
+        required: (theInventory) => theInventory.note,
+        nextPlotPoint: -1
+      }
+    ]
+  },
+  {
+    id: 5, 
+    plotDescription: "You decide to read the note. It warned to you stay away from the door.  You died.", 
+    options: [{
+      text: "Restart game", 
+      nextPlotPoint: -1
+    }]
+  },
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }, 
+  {
+    id: 1,
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    options: [
+      {
+        text: 'Read note.', 
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
+        nextPlotPoint: 3
+      }
+    ]
+  }
+ 
+]
+
 function startGame(){
   inventory = { }
   displayPlotPoint(1);
@@ -34,7 +975,7 @@ function displayPlotPoint (pointNumber) {
 }
 
 function filterOptionButtons(option){
-  return true;  
+  return option.required == null || option.required(inventory);
 }
 
 function optionSelection (option){
@@ -46,84 +987,5 @@ function optionSelection (option){
     displayPlotPoint(option.nextPlotPoint);
   }
 }
-
-const plotPoints = [
-  {
-    id: 1,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
-    options: [
-      {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      }, 
-      {
-        text: "Pick up bag.",
-        setInventory: {bag: true},
-        nextPlotPoint: 2
-      }, 
-      {
-        text: "Leave note and bag.  Walk towards door.",
-        setInventory: {note: false, bag: false },
-        nextPlotPoint: 3
-      }
-    ]
-  }, 
-  {
-    id: 2,
-    plotDescription: 'You read the note.  It says, "Stay clear of the door." You exit through the window.', 
-    options: [
-      {
-        text: 'Congratulations. You survived. Play again.', 
-        nextPlotPoint: -1
-      }, 
-      {
-        text: 'Continue exploring.',
-        nextPlotPoint: 4
-      }
-    ]
-  },
-  {
-    id: 3, 
-    plotDescription: "As you open the door, a bomb explodes throwing you throw the window.", 
-    options: [
-      {
-        text: 'Read note before you die', 
-        required: (theInventory) => theInventory.note, 
-        nextPlotPoint: 5
-      },
-      {
-        text: 'Mumble something and die. Restart game.', 
-        nextPlotPoint: -1
-      }
-    ]
-  }, 
-  {
-    id: 4,
-    plotDescription: "You decide to continue exploring.  As you walk east, you notice a hill with a cottage on it.",
-    options: [
-      {
-        text: "Explore cottage.",
-        nextPlotPoint: -1
-      }, 
-      {
-        text: "Continue walking east", 
-        nextPlotPoint: -1
-      }
-    ]
-  },
-  {
-    id: 5, 
-    plotDescription: "You decide to read the note. It warned to you stay away from the door.  You died.", 
-    options: [{
-      text: "Restart game", 
-      nextPlotPoint: -1
-    }]
-  }
-]
 
 startGame();
