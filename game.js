@@ -1,18 +1,16 @@
 const textElement = document.getElementById(`text`);
 const optionButtonsElement = document.getElementById(`option-buttons`);
 
-let state = {};
+let inventory = {};
 
 function startGame(){
-  state = {}
+  inventory = { }
   displayPlotPoint(1);
 }
 
 function displayPlotPoint (pointNumber) {
   // Using pointNumber, find plotPoint with the id equal to pointNumber.
   let myPlotPoint = plotPoints.filter(plotPoint => plotPoint.id === pointNumber)[0];
-
-  console.log(myPlotPoint);
 
   // Display the plotDescription from the plotPoint with id equal to pointNumber.
   textElement.innerText = myPlotPoint.plotDescription;
@@ -22,22 +20,29 @@ function displayPlotPoint (pointNumber) {
   while(optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild);
   }
-    // Create the new option buttons.  
+    // Create the new option buttons.
   myPlotPoint.options.forEach(option => {
-    const button = document.createElement('button');
-    button.innerText = option.text;
-    button.classList.add('btn');
-    button.addEventListener('click', () => optionSelection (option));
-    optionButtonsElement.appendChild(button);
+  // Check if the required inventory is available to determine what options to display.
+  if ( filterOptionButtons(option) ){
+      const button = document.createElement('button');
+      button.innerText = option.text;
+      button.classList.add('btn');
+      button.addEventListener('click', () => optionSelection (option));
+      optionButtonsElement.appendChild(button);
+    }
   });
+}
 
+function filterOptionButtons(option){
+  return true;  
 }
 
 function optionSelection (option){
-  console.log("Selection made.  Option = ", option);
+  // If the option is a valid plot point, display next plot point.  Otherwise, restart game.
   if(option.nextPlotPoint <= 0){
     startGame();
   } else {
+    inventory = Object.assign(inventory, option.setInventory);
     displayPlotPoint(option.nextPlotPoint);
   }
 }
@@ -45,7 +50,7 @@ function optionSelection (option){
 const plotPoints = [
   {
     id: 1,
-    plotDescription: 'You wake up in a strange place. Beside you is a note.',
+    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
     options: [
       {
         text: 'Read note.', 
@@ -53,29 +58,71 @@ const plotPoints = [
       }, 
       {
         text: 'Shove note in your pocket and walk towards door.', 
+        setInventory: {note: true},
+        nextPlotPoint: 3
+      }, 
+      {
+        text: "Pick up bag.",
+        setInventory: {bag: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: "Leave note and bag.  Walk towards door.",
+        setInventory: {note: false, bag: false },
         nextPlotPoint: 3
       }
     ]
   }, 
   {
     id: 2,
-    plotDescription: 'You read the note.  It says, "Stay clear of the door." ', 
+    plotDescription: 'You read the note.  It says, "Stay clear of the door." You exit through the window.', 
     options: [
       {
-        text: 'Congratulations.  Play again.', 
+        text: 'Congratulations. You survived. Play again.', 
         nextPlotPoint: -1
+      }, 
+      {
+        text: 'Continue exploring.',
+        nextPlotPoint: 4
       }
     ]
   },
   {
     id: 3, 
-    plotDescription: 'You git hit by door on your way out.  You died.', 
+    plotDescription: "As you open the door, a bomb explodes throwing you throw the window.", 
     options: [
       {
-        text: 'Restart game.', 
+        text: 'Read note before you die', 
+        required: (theInventory) => theInventory.note, 
+        nextPlotPoint: 5
+      },
+      {
+        text: 'Mumble something and die. Restart game.', 
         nextPlotPoint: -1
       }
     ]
+  }, 
+  {
+    id: 4,
+    plotDescription: "You decide to continue exploring.  As you walk east, you notice a hill with a cottage on it.",
+    options: [
+      {
+        text: "Explore cottage.",
+        nextPlotPoint: -1
+      }, 
+      {
+        text: "Continue walking east", 
+        nextPlotPoint: -1
+      }
+    ]
+  },
+  {
+    id: 5, 
+    plotDescription: "You decide to read the note. It warned to you stay away from the door.  You died.", 
+    options: [{
+      text: "Restart game", 
+      nextPlotPoint: -1
+    }]
   }
 ]
 
