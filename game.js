@@ -274,216 +274,268 @@ const plotPoints = [
     options: [
       {
         text: 'Buy a sword for 50 coins.', 
+        setInventory: {sword: true, money: 50},
         nextPlotPoint: 11
       }, 
       {
         text: 'Buy a shield for 30 coins.', 
+        setInventory: {shield: true, money: 70},
         nextPlotPoint: 12
       },
       {
-        text: 'Buy full armor for 75 coins.', 
+        text: 'Buy full armor for 80 coins.', 
+        setInventory: {armor: true, money: 20},
         nextPlotPoint: 13
       }, 
       {
         text: 'Buy a potion for 20 coins.', 
+        setInventory: {potion: true, money: 80},
         nextPlotPoint: 15
       }
-
     ]
   }, 
   {
     id: 11,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to purchase a sword.  You find a beautiful, dangerous sword that has a gold handle and appears to be very sharp.  The sword costs you 50 coins.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Buy a shield for 30 coins.', 
+        required: (theInventory) => !theInventory.shield,
+        setInventory: {shield: true, money: 20},
+        nextPlotPoint: 12
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      }
+        text: 'Buy a potion for 20 coins.', 
+        required: (theInventory) => !theInventory.potion,
+        setInventory: {shield: true, money: 30},
+        nextPlotPoint: 15
+      }, 
+      {
+        text: 'Finish shopping for supplies.', 
+        nextPlotPoint: 14
+      } 
     ]
   }, 
   {
     id: 12,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to purchase a shield.  You find a light, large shield that is durable and strong.  The shield costs 30 coins.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Buy a sword for 50 coins.', 
+        required: (theInventory) => !theInventory.sword,
+        setInventory: {sword: true, money: 20},
+        nextPlotPoint: 11
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Buy a potion for 20 coins.', 
+        required: (theInventory) => !theInventory.potion,
+        setInventory: {potion: true, money: 50},
+        nextPlotPoint: 15
+      },
+      {
+        text: `Finish shopping for supplies.`,
+        nextPlotPoint: 14
       }
     ]
   }, 
   {
     id: 13,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: 'You decide to buy a full suit of armor.  It includes a helmet, shield, sword, and all the accessories.  The cost is 80 coins.',
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Buy a potion for 20 coins.', 
+        required: (theInventory) => !theInventory.potion,
+        setInventory: {potion: true},
+        nextPlotPoint: 15
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Finish shopping for supplies.', 
+        nextPlotPoint: 14
       }
     ]
   }, 
   {
     id: 14,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You finish shopping for supplies.  It's now time to hunt a dragon.  You've heard that the dragon is living at the castle just west of town.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Go west to the castle.', 
+        nextPlotPoint: 16
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Go to the woods outside the castle and wait for the dragon to fly by.', 
+        nextPlotPoint: 16
       }
     ]
   }, 
   {
     id: 15,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to purchase a potion that is guaranteed to slay the dragon.  It is an acid like potion that will burn the scales right off the dragon making it vulnerable to your attack.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Buy a sword for 50 coins.', 
+        required: (theInventory) => !theInventory.sword && !theInventory.armor,
+        setInventory: {sword: true},
+        nextPlotPoint: 11
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Buy a shield for 30 coins.', 
+        required: (theInventory) => !theInventory.shield && !theInventory.armor,
+        setInventory: {shield: true},
+        nextPlotPoint: 12
+      },
+      {
+        text: 'Buy a suit of armor for 80 coins.', 
+        required: (theInventory) => (!theInventory.sword && !theInventory.armor) || (!theInventory.shield && !theInventory.armor),
+        setInventory: {armor: true},
+        nextPlotPoint: 13
+      },
+      {
+        text: 'Finish shopping for supplies.', 
+        nextPlotPoint: 14
       }
     ]
   }, 
   {
     id: 16,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `As you travel through the wildnerness to the dragon's castle, you get tired and fall asleep.  When you wake up, you find the dragon staring at you.  You're no longer in the wildnerness.  You look around and see you're in the castle.  The dragon must have found you and brought you here. 16`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Draw your sword and jump towards the dragon. 18`, 
+        required: (theInventory) => theInventory.sword || theInventory.armor,
+        setInventory: {sword: false},
+        nextPlotPoint: 18
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Hide behind your shield. 17`, 
+        required: (theInventory) => theInventory.shield || theInventory.armor,
+        nextPlotPoint: 17
+      }, 
+      {
+        text: `Throw the potion at the dragon. 19`,
+        required: (theInventory) => theInventory.potion,
+        setInventory: {potion: false},
+        nextPlotPoint: 19
+      }, 
+      {
+        text: `Run from the dragon as fast as you can. 20`, 
+        nextPlotPoint: 20
       }
     ]
   }, 
   {
     id: 17,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You pull out your sheild and hide behind it just in time.  The dragon takes one breath and blows smoking hot fire directly at you.  The shield warms in the flames as it deflects the majority of the heat away from you. 17`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Draw your sword and jump towards the dragon. 18`, 
+        required: (theInventory) => (theInventory.sword && theInventory.potion)|| (theInventory.armor && theInventory.potion),
+        setInventory: {sword: false}, 
+        nextPlotPoint: 18
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Draw your sword and jump towards the dragon. 21`,
+        required: (theInventory) => (theInventory.sword && theInventory.throwPotion)|| (theInventory.armor && theInventory.throwPotion),
+        setInventory: {sword: false}, 
+        nextPlotPoint: 21
+      },
+      {
+        text: `Throw the potion at the dragon. 19`,
+        required: (theInventory) => theInventory.potion,
+        setInventory: {potion: false, throwPotion: true},
+        nextPlotPoint: 19
+      }, 
+      {
+        text: `Run from the dragon as fast as you can. 20`, 
+        nextPlotPoint: 20
       }
     ]
   }, 
   {
     id: 18,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to draw your sword and jump towards the dragon.  As you do, the dragon moves ever so slighly and turns to the side as if it heard something.  Just then, you attempt to plunge your sword deep into the dragon's neck and pull it out quickly.  Unfortunately, the sword glances off the dragon's scales and bounces to the floor. 18`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Grab your sword and run from the dragon as fast as you can. 20`, 
+        setInventory: {sword: true}, 
+        nextPlotPoint: 20
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Grab your sword and hide behind your shield. 17`, 
+        required: (theInventory) => theInventory.shield || theInventory.armor,
+        setInventory: {sword: true}, 
+        nextPlotPoint: 17
+      }, 
+      {
+        text: `Throw the potion at the dragon. 19`, 
+        required: (theInventory) => theInventory.potion,
+        setInventory: {potion: false},
+        nextPlotPoint: 19
       }
     ]
   }, 
   {
     id: 19,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `With all your might, you throw the potion at the dragon.  It lands square on the dragon's head.  The dragon roars and tosses his head back throwing the potion down it's spine and along the remainder of it's body.  The dragon's scales begin to bubble and melt off as if by magic.  Now is the time to strike at the dragon since it is most vulnerable. 19`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Stab the dragon's heart. 21`, 
+        required: (theInventory) => theInventory.sword || theInventory.armor,
+        setInventory: {sword: false, throwPotion: true},
+        nextPlotPoint: 21
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Throw the shield towards the dragon. 23` ,
+        required: (theInventory) => theInventory.shield || theInventory.armor,
+        setInventory: {shield: false, throwPotion: true},
+        nextPlotPoint: 23
       }
     ]
   }, 
   {
     id: 20,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You begin to run away from the dragon as fast as you can.  Without flinching, the dragon reaches out and grabs you.  You're stuck in the dragon's mighty claws.  20`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Struggle to get free.', 
+        nextPlotPoint: 22
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Reach for the potion in your pocket.`, 
+        required: (theInventory) => theInventory.potion,
+        setInventory: {potion: false}, 
+        nextPlotPoint: 19
       }
     ]
   }, 
   {
     id: 21,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `The potion melted away the dragon's scales.  As you run towards the dragon, you see it's heart beating.  You dive in the direction of the dragon's heart.  Moments later, you back up and look at the dragon.  The sword is protruding from the beast.  Blood is covering the floor.  As if in shock, the dragon rolls back on the floor and lands on it's back.  You've saved the village from the fate of this dangerous dragon. 21`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Restart game.`, 
+        nextPlotPoint: 37
       }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      }
     ]
   }, 
   {
     id: 22,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You struggle to no avail.  It's useless.  The dragon takes a deep breath and seems to smile.  Then, slowly, the dragon begins to blow flames in your face and on your body.  Moments later, you are charred to a crisp and ready to eat.  The dragon has won a great prize.  Dinner.  22`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Restart game.', 
+        nextPlotPoint: 37
       }
     ]
   }, 
   {
     id: 23,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You throw the shield at the newly descaled dragon.  The shield pierces the skin of the dragon just under its chin.  As the dragon begins to roar, the shield slices deeply into the dragon's throat.  Blood begins covering the floor.  As if in shock, the dragon rolls back and lands on the floor.  You've saved the village from the dangerous dragon. 23`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Restart game.', 
+        nextPlotPoint: 37
       }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      }
     ]
   }, 
   {
@@ -678,7 +730,7 @@ const plotPoints = [
   }, 
   {
     id: 37,
-    plotDescription: 'Welcome to the adventure games.  What game would you like to play?',
+    plotDescription: 'Welcome to the adventure games.  These choose your own adventure games have been written by Rachel Bock based on a tutorial by WebDevSimplified and are available online.  What game would you like to play?',
     options: [
       {
         text: 'Search the room.', 
@@ -687,6 +739,10 @@ const plotPoints = [
       {
         text: 'Fight with a dragon.',
         nextPlotPoint: 10
+      },
+      {
+        text: `The Mystery Adventure Game`,
+        nextPlotPoint: 24
       },
       {
         text: 'Other games (Under construction)', 
