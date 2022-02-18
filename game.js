@@ -540,181 +540,145 @@ const plotPoints = [
   }, 
   {
     id: 24,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You wake up in bed.  It is another day.  This time, it is a Saturday.  That means it's time to get ready for the weekend. What do you want to do this weekend?`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Go exploring.`, 
+        nextPlotPoint: 25
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Roll over in bed and go back to sleep.`, 
+        nextPlotPoint: 29
       }
     ]
   }, 
   {
     id: 25,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: 'You decide to go exploring.  Where do you want to explore?',
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Go west.`, 
+        nextPlotPoint: 26
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Go south`, 
+        nextPlotPoint: 27
+      }, 
+      {
+        text: `Go east.`, 
+        nextPlotPoint: 28
       }
     ]
   }, 
   {
     id: 26,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: 'You decided to go west.  There are a couple things to do to the west.  There is a playground at a park or a fishing pond.',
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
+        text: `Go to the playground at the park.`, 
+        nextPlotPoint: 32
+      },
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Go fishing at the pond.`, 
+        nextPlotPoint: 33
       }
     ]
   }, 
   {
     id: 27,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to go south.  There is an amusement park or you could go hiking in the mountains.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Play at the amusement park.`,
+        nextPlotPoint: 34
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Go hiking in the mountains.`, 
+        nextPlotPoint: 35
       }
     ]
   }, 
   {
     id: 28,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to go east.  There's nothing east of your location.  So instead, you head south.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Go south.`, 
+        nextPlotPoint: 27
       }
     ]
   }, 
   {
     id: 29,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to roll over and go back to sleep.  You can only sleep (or pretend to sleep) for so long.  After you wake up, you are still at home and it is around noon.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `Clean the house.`, 
+        nextPlotPoint: 30
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Play in the yard.`, 
+        nextPlotPoint: 31
       }
     ]
   }, 
   {
     id: 30,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `It's time to clean.  You start working your way through the house.  First, the kitchen gets cleaned.  Then, the bathroom is cleaned.  After a while, you look at the clock and realize that it is almost 7 p.m.  You spent the entire afternoon cleaning.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `That sucks.  Restart game.`, 
+        nextPlotPoint: 37
       }
     ]
   }, 
   {
     id: 31,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to play for a while in the back yard.  After about an hour, you decide to come inside and notice how dirty the house is.  You start to pick up a few things and before you know it, the afternoon is all but gone.  It's almost 7 p.m. and you cleaned most of the day.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: `At least you got to play a little.  Restart game.`, 
+        nextPlotPoint: 37
       }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      }
     ]
   }, 
   {
     id: 32,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `It's time to go to the playground.  The sun is shining and the birds are singing.  It's a beautiful day and not too hot to be outside. You enjoy a few hours at the playground.  After a while, you get tired and go back home to sleep.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `What a lovely day! Restart game.`, 
+        nextPlotPoint: 37
       }
     ]
   }, 
   {
     id: 33,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You decide to go fishing at the local pond.  Unfortunately, while you are there, the police show up and ask for a fishing license. "No worries" you think as you pull out an expired fishing license.  Realizing it is expired, you soon learn that fishing with an expired license still doesn't prevent you from getting a ticket.  You pack your belongings and head back home.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `That sucks.  Restart game.`, 
+        nextPlotPoint: 37
       }
     ]
   }, 
   {
     id: 34,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You arrive at the amusement park.  It is nearly empty because you came before they open.  You stand in line until they open.  Then, you spend the majority of the day standing in lines for their rides.  You wish you would have bought the fast pass that allows you to jump to the front of the line.  But, instead, you get sunburned and hangry.  Maybe next time, you'll stay home.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `Head home for another day.  Restart game.`, 
+        nextPlotPoint: 37
       }
     ]
   }, 
   {
     id: 35,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: `You head to the mountains for a hike.  You climb rocks and hills.  You walk and hike over multiple valleys.  After a while, you realize that you got lost and don't know how to get back to the car.  You check if there is cell phone service and find out you have two bars of cell phone signal.  You call the police and they send out a rescue team for you.  You spend the night in the wilderness waiting to be rescued.`,
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
-      }, 
-      {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: `You are rescued and return home to your comfy pillows. Restart game.`, 
+        nextPlotPoint: 37
       }
     ]
   }, 
@@ -725,7 +689,15 @@ const plotPoints = [
       {
         text: 'Search the room', 
         nextPlotPoint: 1
-      }
+      },
+      {
+        text: 'Fight with a dragon.',
+        nextPlotPoint: 10
+      },
+      {
+        text: `The Traveler Adventure Game`,
+        nextPlotPoint: 24
+      },
     ]
   }, 
   {
@@ -741,7 +713,7 @@ const plotPoints = [
         nextPlotPoint: 10
       },
       {
-        text: `The Mystery Adventure Game`,
+        text: `The Traveler Adventure Game`,
         nextPlotPoint: 24
       },
       {
