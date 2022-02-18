@@ -25,32 +25,31 @@ const plotPoints = [
     plotDescription: 'You read the note.  It says, "Stay clear of the door." You look around and see a window. You decide to exit through the window when you leave.', 
     options: [
       {
-        text: 'Search the bag', 
-        required: (theInventory) => !theInventory.searchBag, 
+        text: 'Search the room', 
         setInventory: {searchBag: true}, 
         nextPlotPoint: 3
       },
       { 
         text: 'Search the desk',
-        required: (theInventory) => !theInventory.searchDesk,
+        required: (theInventory) => !theInventory.searchDesk && theInventory.desk,
         setInventory: {searchDesk: true},
         nextPlotPoint: 6
       },
       {
         text: 'Search the filing cabinet', 
-        required: (theInventory) => !theInventory.searchFilingCabinet, 
+        required: (theInventory) => !theInventory.searchFilingCabinet && theInventory.filingCabinet, 
         setInventory: {searchFilingCabinet: true}, 
-        nextPlotPoint: -1
+        nextPlotPoint: 9
       },
       {
         text: 'Search the briefcase', 
-        required: (theInventory) => !theInventory.searchBriefcase,
+        required: (theInventory) => !theInventory.searchBriefcase && theInventory.bag,
         setInventory: {searchBriefcase: true}, 
         nextPlotPoint: 7
       },
       {
         text: 'Open the folder on the desk', 
-        required: (theInventory) => !theInventory.openFolder,
+        required: (theInventory) => !theInventory.openFolder && theInventory.searchBriefcase,
         setInventory: {openFolder: true}, 
         nextPlotPoint: 8
       }, 
@@ -91,7 +90,7 @@ const plotPoints = [
   }, 
   {
     id: 4,
-    plotDescription: "You search the room.  It appears to be an office.  You see a filing cabinet and a desk. ",
+    plotDescription: "You search the room more.  It appears to be an office.  You see a filing cabinet and a desk.",
     options: [
       {
         text: "Search the desk",
@@ -121,28 +120,29 @@ const plotPoints = [
   {
     id: 5, 
     plotDescription: "You ate all the food in the bag.  Now, your stomach is churning. You may be getting food poisoning.", 
-    options: [{
-      text: "Rush to the door to find a place to throw up.", 
-      setInventory: {food: false},
-      nextPlotPoint: 39
-    }, 
-    {
-      text: "Quickly find a trash can and toss those cookies!",
-      setInventory: {food: false},
-      nextPlotPoint: 7
-    },
-    {
-      text: "Read the note you found earlier",
-      required: (theInventory) => !theInventory.readNote && theInventory.note, 
-      setInventory: {readNote: true},
-      nextPlotPoint: 2
-    }, 
-    {
-      text: 'Exit through window.',
-      required: (theInventory) => theInventory.readNote,
-      nextPlotPoint: 40
-    }
-  ]
+    options: [
+      {
+        text: "Rush to the door to find a place to throw up.", 
+        setInventory: {food: false},
+        nextPlotPoint: 39
+      }, 
+      {
+        text: "Quickly find a trash can and toss those cookies!",
+        setInventory: {food: false},
+        nextPlotPoint: 4
+      },
+      {
+        text: "Read the note you found earlier",
+        required: (theInventory) => !theInventory.readNote && theInventory.note, 
+        setInventory: {readNote: true},
+        nextPlotPoint: 2
+      }, 
+      {
+        text: 'Exit through window.',
+        required: (theInventory) => theInventory.readNote,
+        nextPlotPoint: 40
+      }
+    ]
   },
   {
     id: 6,
@@ -156,7 +156,7 @@ const plotPoints = [
       }, 
       {
         text: 'Search filing cabinet', 
-        required: (theInventory) => !theInventory.searchFilingCabinet,
+        required: (theInventory) => !theInventory.searchFilingCabinet && theInventory.filingCabinet,
         setInventory: {searchFilingCabinet: true},
         nextPlotPoint: 9
       }, 
@@ -188,6 +188,12 @@ const plotPoints = [
         nextPlotPoint: 10
       },
       {
+        text: 'Search the filing cabinet', 
+        required: (theInventory) => !theInventory.searchFilingCabinet && theInventory.filingCabinet, 
+        setInventory: {searchFilingCabinet: true}, 
+        nextPlotPoint: 9
+      },
+      {
         text: 'Read note you found earlier', 
         required: (theInventory) => theInventory.note && !theInventory.readNote,
         setInventory: {readNote: true},
@@ -205,7 +211,13 @@ const plotPoints = [
     plotDescription: "You open the folder from the briefcase.  It has financial statements with red numbers.  This can't be right! Something must be wrong or else someone's hiding something.",
     options: [
       {
-        text: 'You eat the food from the bag you found earlier.', 
+        text: 'Search the filing cabinet', 
+        required: (theInventory) => !theInventory.searchFilingCabinet && theInventory.filingCabinet, 
+        setInventory: {searchFilingCabinet: true}, 
+        nextPlotPoint: 9
+      },
+      {
+        text: 'Eat the food from the bag you found earlier.', 
         required: (theInventory) => theInventory.food, 
         setInventory: {ateFood: true, food: false},
         nextPlotPoint: 5
@@ -229,7 +241,7 @@ const plotPoints = [
     options: [
       {
         text: 'Search desk',
-        required: (theInventory) => !theInventory.searchDesk,
+        required: (theInventory) => !theInventory.searchDesk && theInventory.desk,
         setInventory: {searchDesk: true}, 
         nextPlotPoint: 6
       },
@@ -258,17 +270,25 @@ const plotPoints = [
   }, 
   {
     id: 10,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: "You've selected to play 'Fight with a dragon.' You've heard there is a dragon at a local castle.  The dragon has been seen eating sheep and setting fire to the local farms.  You've been enlisted to fight the dragon and save the village.  But, first, you need supplies.  You grab 100 coins and walk to the market.",
     options: [
       {
-        text: 'Read note.', 
-        nextPlotPoint: 2
+        text: 'Buy a sword for 50 coins.', 
+        nextPlotPoint: 11
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Buy a shield for 30 coins.', 
+        nextPlotPoint: 12
+      },
+      {
+        text: 'Buy full armor for 75 coins.', 
+        nextPlotPoint: 13
+      }, 
+      {
+        text: 'Buy a potion for 20 coins.', 
+        nextPlotPoint: 15
       }
+
     ]
   }, 
   {
@@ -664,6 +684,10 @@ const plotPoints = [
         text: 'Search the room.', 
         nextPlotPoint: 1
       }, 
+      {
+        text: 'Fight with a dragon.',
+        nextPlotPoint: 10
+      },
       {
         text: 'Other games (Under construction)', 
         nextPlotPoint: 36
