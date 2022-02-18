@@ -10,13 +10,13 @@ const plotPoints = [
     options: [
       {
         text: 'Read note.', 
-        setInventory: {note: true},
+        setInventory: {note: true, readNote: true},
         nextPlotPoint: 2
       }, 
       {
-        text: "Save note for later",
+        text: "Save the note for later",
         setInventory: {note: true, readNote: false},
-        nextPlotPoint: -1
+        nextPlotPoint: 3
       } 
     ]
   }, 
@@ -24,37 +24,62 @@ const plotPoints = [
     id: 2,
     plotDescription: 'You read the note.  It says, "Stay clear of the door." You look around and see a window. You decide to exit through the window when you leave.', 
     options: [
+      {
+        text: 'Search the bag', 
+        required: (theInventory) => !theInventory.searchBag, 
+        setInventory: {searchBag: true}, 
+        nextPlotPoint: 3
+      },
       { 
-        text: 'Search the room',
-        setInventory: {readNote: true},
-        nextPlotPoint: 4
+        text: 'Search the desk',
+        required: (theInventory) => !theInventory.searchDesk,
+        setInventory: {searchDesk: true},
+        nextPlotPoint: 6
       },
       {
+        text: 'Search the filing cabinet', 
+        required: (theInventory) => !theInventory.searchFilingCabinet, 
+        setInventory: {searchFilingCabinet: true}, 
+        nextPlotPoint: -1
+      },
+      {
+        text: 'Search the briefcase', 
+        required: (theInventory) => !theInventory.searchBriefcase,
+        setInventory: {searchBriefcase: true}, 
+        nextPlotPoint: 7
+      },
+      {
+        text: 'Open the folder on the desk', 
+        required: (theInventory) => !theInventory.openFolder,
+        setInventory: {openFolder: true}, 
+        nextPlotPoint: 8
+      }, 
+      {
         text: 'Exit through window.',
-        required: (theInventory) => theInventory.note,
-        setInventory: {readNote: true},
+        required: (theInventory) => theInventory.readNote,
+        setInventory: {windowExit: true},
         nextPlotPoint: 40
       }
     ]
   },
   {
     id: 3, 
-    plotDescription: "You search through the bag finding food and money.", 
+    plotDescription: "You search through the room and see a bag.  You search through the bag finding food and money.", 
     options: [
       {
         text: 'Eat the food in the bag', 
-        setInventory: {ateFood: true, searchBag: true, money: true},
+        setInventory: {ateFood: true, money: true},
         nextPlotPoint: 5
       },
       {
-        text: 'Search the room', 
-        setInventory: {money: true, food:true, searchBag: true},
+        text: 'Save the food for later.', 
+        setInventory: {money: true, food:true},
         nextPlotPoint: 4
       }, 
       {
-        text: "Read note", 
-        required: (theInventory) => theInventory.note,
-        setInventory: {searchBag: true},
+        text: "Read the note you found earlier", 
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
+        setInventory: {money: true, food: true, readNote: true},
         nextPlotPoint: 2
       },
       {
@@ -70,17 +95,20 @@ const plotPoints = [
     options: [
       {
         text: "Search the desk",
+        required: (theInventory) => !theInventory.searchDesk,
         setInventory: {desk: true, filingCabinet: true, searchDesk: true},
         nextPlotPoint: 6
       },
       {
         text: "Search the filing cabinet", 
+        required: (theInventory) => !theInventory.searchFilingCabinet,
         setInventory: {desk: true, filingCabinet: true, searchFilingCabinet: true},
-        nextPlotPoint: -1
+        nextPlotPoint: 9
       },
       {
-        text: "Read the note",
+        text: "Read the note you found earlier",
         required: (theInventory) => !theInventory.readNote && theInventory.note, 
+        setInventory: {readNote: true},
         nextPlotPoint: 2
       }, 
       {
@@ -92,86 +120,139 @@ const plotPoints = [
   },
   {
     id: 5, 
-    plotDescription: "You ate all the food in the bag.  Now, your stomach is churning.", 
+    plotDescription: "You ate all the food in the bag.  Now, your stomach is churning. You may be getting food poisoning.", 
     options: [{
       text: "Rush to the door to find a place to throw up.", 
+      setInventory: {food: false},
       nextPlotPoint: 39
     }, 
     {
       text: "Quickly find a trash can and toss those cookies!",
       setInventory: {food: false},
       nextPlotPoint: 7
+    },
+    {
+      text: "Read the note you found earlier",
+      required: (theInventory) => !theInventory.readNote && theInventory.note, 
+      setInventory: {readNote: true},
+      nextPlotPoint: 2
+    }, 
+    {
+      text: 'Exit through window.',
+      required: (theInventory) => theInventory.readNote,
+      nextPlotPoint: 40
     }
   ]
   },
   {
     id: 6,
-    plotDescription: "You decide to search the desk.  In the second drawer, there is a map of Wisconsin from 1945.",
+    plotDescription: "You decide to search the desk.  On the top of the desk, there is a briefcase.  The first drawer has pens and paperclips. In the second drawer, there is a map of Wisconsin from 1945.",
     options: [
       {
-        text: 'Save the map in the bag.', 
-        required: (theInventory) => theInventory.bag,
-        setInventory: {map: true},
-        nextPlotPoint: 8
+        text: 'Search briefcase', 
+        required: (theInventory) => !theInventory.searchBriefcase,
+        setInventory: {searchBriefcase: true},
+        nextPlotPoint: 7
       }, 
       {
-        text: 'Continue searching the desk.', 
+        text: 'Search filing cabinet', 
+        required: (theInventory) => !theInventory.searchFilingCabinet,
+        setInventory: {searchFilingCabinet: true},
         nextPlotPoint: 9
       }, 
       {
+        text: "Read the note you found earlier",
+        required: (theInventory) => !theInventory.readNote && theInventory.note, 
+        setInventory: {readNote: true},
+        nextPlotPoint: 2
+      }, 
+      {
         text: 'Exit through window.',
-        required: (theInventory) => theInventory.note,
+        required: (theInventory) => theInventory.readNote,
         nextPlotPoint: 40
       }
     ]
   }, 
   {
     id: 7,
-    plotDescription: 'You feel better now.',
+    plotDescription: 'You decide to search the briefcase.  You find a folder.',
     options: [
       {
-        text: 'Read note.', 
+        text: 'Open folder', 
+        setInventory: {openFolder: true},
+        nextPlotPoint: 8
+      },
+      {
+        text: "Toss folder on the desk.", 
+        setInventory: {openFolder: false}, 
+        nextPlotPoint: 10
+      },
+      {
+        text: 'Read note you found earlier', 
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
+        setInventory: {readNote: true},
         nextPlotPoint: 2
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
-      },
-      {
         text: 'Exit through window.',
-        required: (theInventory) => theInventory.note,
+        required: (theInventory) => theInventory.readNote,
         nextPlotPoint: 40
       }
     ]
   }, 
   {
     id: 8,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: "You open the folder from the briefcase.  It has financial statements with red numbers.  This can't be right! Something must be wrong or else someone's hiding something.",
     options: [
       {
-        text: 'Read note.', 
+        text: 'You eat the food from the bag you found earlier.', 
+        required: (theInventory) => theInventory.food, 
+        setInventory: {ateFood: true, food: false},
+        nextPlotPoint: 5
+      },
+      {
+        text: 'Read note you found earlier', 
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
+        setInventory: {readNote: true},
         nextPlotPoint: 2
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Exit through window.',
+        required: (theInventory) => theInventory.readNote,
+        nextPlotPoint: 40
       }
     ]
   }, 
   {
     id: 9,
-    plotDescription: 'You wake up in a strange place. Beside you is a note and a bag.',
+    plotDescription: 'You search the filing cabinet.  In the 5-drawer cabinet, you find multiple folders with financial statements in them.  This office must belong to an Accountant.',
     options: [
       {
-        text: 'Read note.', 
+        text: 'Search desk',
+        required: (theInventory) => !theInventory.searchDesk,
+        setInventory: {searchDesk: true}, 
+        nextPlotPoint: 6
+      },
+      {
+        text: 'Search briefcase', 
+        required: (theInventory) => !theInventory.searchBriefcase && theInventory.searchDesk,
+        setInventory: {searchBriefcase: true},
+        nextPlotPoint: 7
+      }, 
+      {
+        text: 'You get bored searching the room and walk towards the door.', 
+        nextPlotPoint: 39
+      }, 
+      {
+        text: 'Read note you found earlier', 
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
+        setInventory: {readNote: true},
         nextPlotPoint: 2
       }, 
       {
-        text: 'Shove note in your pocket and walk towards door.', 
-        setInventory: {note: true},
-        nextPlotPoint: 3
+        text: 'Exit through window.',
+        required: (theInventory) => theInventory.readNote,
+        nextPlotPoint: 40
       }
     ]
   }, 
@@ -605,7 +686,7 @@ const plotPoints = [
     options: [
       {
         text: 'Read the note before you die.', 
-        required: (theInventory) => theInventory.note,
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
         nextPlotPoint: 38
       }, 
       {
