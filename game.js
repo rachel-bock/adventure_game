@@ -398,76 +398,76 @@ const plotPoints = [
   }, 
   {
     id: 16,
-    plotDescription: `As you travel through the wildnerness to the dragon's castle, you get tired and fall asleep.  When you wake up, you find the dragon staring at you.  You're no longer in the wildnerness.  You look around and see you're in the castle.  The dragon must have found you and brought you here. 16`,
+    plotDescription: `As you travel through the wildnerness to the dragon's castle, you get tired and fall asleep.  When you wake up, you find the dragon staring at you.  You're no longer in the wildnerness.  You look around and see you're in the castle.  The dragon must have found you and brought you here.`,
     options: [
       {
-        text: `Draw your sword and jump towards the dragon. 18`, 
+        text: `Draw your sword and jump towards the dragon.`, 
         required: (theInventory) => theInventory.sword || theInventory.armor,
         setInventory: {sword: false},
         nextPlotPoint: 18
       }, 
       {
-        text: `Hide behind your shield. 17`, 
+        text: `Hide behind your shield.`, 
         required: (theInventory) => theInventory.shield || theInventory.armor,
         nextPlotPoint: 17
       }, 
       {
-        text: `Throw the potion at the dragon. 19`,
+        text: `Throw the potion at the dragon.`,
         required: (theInventory) => theInventory.potion,
         setInventory: {potion: false},
         nextPlotPoint: 19
       }, 
       {
-        text: `Run from the dragon as fast as you can. 20`, 
+        text: `Run from the dragon as fast as you can.`, 
         nextPlotPoint: 20
       }
     ]
   }, 
   {
     id: 17,
-    plotDescription: `You pull out your sheild and hide behind it just in time.  The dragon takes one breath and blows smoking hot fire directly at you.  The shield warms in the flames as it deflects the majority of the heat away from you. 17`,
+    plotDescription: `You pull out your sheild and hide behind it just in time.  The dragon takes one breath and blows smoking hot fire directly at you.  The shield warms in the flames as it deflects the majority of the heat away from you.`,
     options: [
       {
-        text: `Draw your sword and jump towards the dragon. 18`, 
+        text: `Draw your sword and jump towards the dragon.`, 
         required: (theInventory) => (theInventory.sword && theInventory.potion)|| (theInventory.armor && theInventory.potion),
         setInventory: {sword: false}, 
         nextPlotPoint: 18
       }, 
       {
-        text: `Draw your sword and jump towards the dragon. 21`,
+        text: `Draw your sword and jump towards the dragon.`,
         required: (theInventory) => (theInventory.sword && theInventory.throwPotion)|| (theInventory.armor && theInventory.throwPotion),
         setInventory: {sword: false}, 
         nextPlotPoint: 21
       },
       {
-        text: `Throw the potion at the dragon. 19`,
+        text: `Throw the potion at the dragon.`,
         required: (theInventory) => theInventory.potion,
         setInventory: {potion: false, throwPotion: true},
         nextPlotPoint: 19
       }, 
       {
-        text: `Run from the dragon as fast as you can. 20`, 
+        text: `Run from the dragon as fast as you can.`, 
         nextPlotPoint: 20
       }
     ]
   }, 
   {
     id: 18,
-    plotDescription: `You decide to draw your sword and jump towards the dragon.  As you do, the dragon moves ever so slighly and turns to the side as if it heard something.  Just then, you attempt to plunge your sword deep into the dragon's neck and pull it out quickly.  Unfortunately, the sword glances off the dragon's scales and bounces to the floor. 18`,
+    plotDescription: `You decide to draw your sword and jump towards the dragon.  As you do, the dragon moves ever so slighly and turns to the side as if it heard something.  Just then, you attempt to plunge your sword deep into the dragon's neck and pull it out quickly.  Unfortunately, the sword glances off the dragon's scales and bounces to the floor.`,
     options: [
       {
-        text: `Grab your sword and run from the dragon as fast as you can. 20`, 
+        text: `Grab your sword and run from the dragon as fast as you can.`, 
         setInventory: {sword: true}, 
         nextPlotPoint: 20
       }, 
       {
-        text: `Grab your sword and hide behind your shield. 17`, 
+        text: `Grab your sword and hide behind your shield.`, 
         required: (theInventory) => theInventory.shield || theInventory.armor,
         setInventory: {sword: true}, 
         nextPlotPoint: 17
       }, 
       {
-        text: `Throw the potion at the dragon. 19`, 
+        text: `Throw the potion at the dragon.`, 
         required: (theInventory) => theInventory.potion,
         setInventory: {potion: false},
         nextPlotPoint: 19
@@ -476,25 +476,29 @@ const plotPoints = [
   }, 
   {
     id: 19,
-    plotDescription: `With all your might, you throw the potion at the dragon.  It lands square on the dragon's head.  The dragon roars and tosses his head back throwing the potion down it's spine and along the remainder of it's body.  The dragon's scales begin to bubble and melt off as if by magic.  Now is the time to strike at the dragon since it is most vulnerable. 19`,
+    plotDescription: `With all your might, you throw the potion at the dragon.  It lands square on the dragon's head.  The dragon roars and tosses his head back throwing the potion down it's spine and along the remainder of it's body.  The dragon's scales begin to bubble and melt off as if by magic.  Now is the time to strike at the dragon since it is most vulnerable.`,
     options: [
       {
-        text: `Stab the dragon's heart. 21`, 
+        text: `Stab the dragon's heart.`, 
         required: (theInventory) => theInventory.sword || theInventory.armor,
         setInventory: {sword: false, throwPotion: true},
         nextPlotPoint: 21
       }, 
       {
-        text: `Throw the shield towards the dragon. 23` ,
+        text: `Throw the shield towards the dragon.` ,
         required: (theInventory) => theInventory.shield || theInventory.armor,
         setInventory: {shield: false, throwPotion: true},
         nextPlotPoint: 23
+      }, 
+      {
+        text: `Run from the dragon as fast as you can.`, 
+        nextPlotPoint: 20
       }
     ]
   }, 
   {
     id: 20,
-    plotDescription: `You begin to run away from the dragon as fast as you can.  Without flinching, the dragon reaches out and grabs you.  You're stuck in the dragon's mighty claws.  20`,
+    plotDescription: `You begin to run away from the dragon as fast as you can.  Without flinching, the dragon reaches out and grabs you.  You're stuck in the dragon's mighty claws.`,
     options: [
       {
         text: 'Struggle to get free.', 
