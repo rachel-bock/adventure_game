@@ -514,7 +514,7 @@ const plotPoints = [
   }, 
   {
     id: 21,
-    plotDescription: `The potion melted away the dragon's scales.  As you run towards the dragon, you see it's heart beating.  You dive in the direction of the dragon's heart.  Moments later, you back up and look at the dragon.  The sword is protruding from the beast.  Blood is covering the floor.  As if in shock, the dragon rolls back on the floor and lands on it's back.  You've saved the village from the fate of this dangerous dragon. 21`,
+    plotDescription: `The potion melted away the dragon's scales.  As you run towards the dragon, you see it's heart beating.  You dive in the direction of the dragon's heart.  Moments later, you back up and look at the dragon.  The sword is protruding from the beast.  Blood is covering the floor.  As if in shock, the dragon rolls backwards and lands on it's back.  It died.  You've saved the village from the fate of this dangerous dragon.`,
     options: [
       {
         text: `Restart game.`, 
@@ -524,7 +524,7 @@ const plotPoints = [
   }, 
   {
     id: 22,
-    plotDescription: `You struggle to no avail.  It's useless.  The dragon takes a deep breath and seems to smile.  Then, slowly, the dragon begins to blow flames in your face and on your body.  Moments later, you are charred to a crisp and ready to eat.  The dragon has won a great prize.  Dinner.  22`,
+    plotDescription: `You struggle to no avail.  It's useless.  The dragon takes a deep breath and seems to smile.  Then, slowly, the dragon begins to blow flames in your face and on your body.  Moments later, you are charred to a crisp and ready to eat.  The dragon has won a great prize.  Dinner.`,
     options: [
       {
         text: 'Restart game.', 
@@ -534,7 +534,7 @@ const plotPoints = [
   }, 
   {
     id: 23,
-    plotDescription: `You throw the shield at the newly descaled dragon.  The shield pierces the skin of the dragon just under its chin.  As the dragon begins to roar, the shield slices deeply into the dragon's throat.  Blood begins covering the floor.  As if in shock, the dragon rolls back and lands on the floor.  You've saved the village from the dangerous dragon. 23`,
+    plotDescription: `You throw the shield at the newly descaled dragon.  The shield pierces the skin of the dragon just under its chin.  As the dragon begins to roar, the shield slices deeply into the dragon's throat.  Blood begins covering the floor.  As if in shock, the dragon rolls back and lands on the floor.  You've saved the village from the dangerous dragon.`,
     options: [
       {
         text: 'Restart game.', 
