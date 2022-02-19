@@ -695,7 +695,7 @@ const plotPoints = [
         nextPlotPoint: 1
       },
       {
-        text: 'Fight with a dragon.',
+        text: 'Fight a dragon.',
         nextPlotPoint: 10
       },
       {
@@ -713,7 +713,7 @@ const plotPoints = [
         nextPlotPoint: 1
       }, 
       {
-        text: 'Fight with a dragon.',
+        text: 'Fight a dragon.',
         nextPlotPoint: 10
       },
       {
