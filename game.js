@@ -184,7 +184,7 @@ const plotPoints = [
       },
       {
         text: "Toss folder on the desk.", 
-        setInventory: {openFolder: false}, 
+        setInventory: {folder: true, openFolder: false}, 
         nextPlotPoint: 10
       },
       {
@@ -370,7 +370,7 @@ const plotPoints = [
   }, 
   {
     id: 15,
-    plotDescription: `You decide to purchase a potion that is guaranteed to slay the dragon.  It is an acid like potion that will burn the scales right off the dragon making it vulnerable to your attack.`,
+    plotDescription: `You decide to purchase a potion that is guaranteed to burn the scales right off the dragon making it vulnerable to your next attack.`,
     options: [
       {
         text: 'Buy a sword for 50 coins.', 
