@@ -5,6 +5,36 @@ let inventory = {};
 
 const plotPoints = [
   {
+    id: 0,
+    plotDescription: 'You toss the folder on the desk and continue searching the briefcase.  Nothing out of the ordinary.  A notebook and pens are in it.',
+    options: [
+      {
+        text: 'Search the filing cabinet', 
+        required: (theInventory) => !theInventory.searchFilingCabinet && theInventory.filingCabinet, 
+        setInventory: {searchFilingCabinet: true}, 
+        nextPlotPoint: 9
+      },
+      {
+        text: 'Open the folder on the desk', 
+        required: (theInventory) => !theInventory.openFolder && theInventory.searchBriefcase,
+        setInventory: {openFolder: true}, 
+        nextPlotPoint: 8
+      },       
+      {
+        text: "Read the note you found earlier", 
+        required: (theInventory) => theInventory.note && !theInventory.readNote,
+        setInventory: {money: true, food: true, readNote: true},
+        nextPlotPoint: 2
+      },
+      {
+        text: 'Exit through window.',
+        required: (theInventory) => theInventory.readNote,
+        setInventory: {windowExit: true},
+        nextPlotPoint: 40
+      }
+    ]
+  },
+  {
     id: 1,
     plotDescription: 'You wake up in a strange place. Beside you is a note.',
     options: [
@@ -185,7 +215,7 @@ const plotPoints = [
       {
         text: "Toss folder on the desk.", 
         setInventory: {folder: true, openFolder: false}, 
-        nextPlotPoint: 10
+        nextPlotPoint: 0
       },
       {
         text: 'Search the filing cabinet', 
@@ -799,7 +829,7 @@ function filterOptionButtons(option){
 
 function optionSelection (option){
   // If the option is a valid plot point, display next plot point.  Otherwise, restart game.
-  if(option.nextPlotPoint <= 0){
+  if(option.nextPlotPoint < 0){
     startGame();
   } else {
     inventory = Object.assign(inventory, option.setInventory);
